@@ -14,4 +14,4 @@ $ npm install
 $ sudo docker start -ai postgres_manuel_instance
 ```
 
-# Wait for more...
+# Wait for more.
