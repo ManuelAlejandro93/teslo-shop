@@ -14,3 +14,5 @@ $ npm install
 # run postgress db
 $ sudo docker start -ai postgres_manuel_instance
 ```
+
+# Wait for more...
