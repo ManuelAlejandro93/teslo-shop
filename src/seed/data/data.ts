@@ -1,8 +1,4 @@
-import { SeedProduct } from '@/seed';
-
-interface SeedData {
-  products: SeedProduct[];
-}
+import { SeedData } from '@/seed';
 
 export const initialData: SeedData = {
   products: [
