@@ -1,6 +1,11 @@
-import { initialData } from '@/seed';
+import { initialData, SeedData } from '@/seed';
 
 export class SeedHelpers {
-  // public static seed =
-  public static runSeed = () => {};
+  private static seed: SeedData = { products: [] };
+  public static startSeed = (): void => {
+    SeedHelpers.seed = initialData;
+  };
+  public static getSeed = (): SeedData => {
+    return SeedHelpers.seed;
+  };
 }
