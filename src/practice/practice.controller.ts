@@ -8,7 +8,6 @@ import {
   Delete,
 } from '@nestjs/common';
 import { PracticeService } from './practice.service';
-import { CreatePracticeDto } from './dto/create-practice.dto';
 
 @Controller('practice')
 export class PracticeController {
