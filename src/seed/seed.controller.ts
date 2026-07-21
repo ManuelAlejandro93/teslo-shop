@@ -1,12 +1,12 @@
 import { Controller, Get } from '@nestjs/common';
-import { SeedService } from './seed.service';
+import { PracticeService } from '../practice';
 
 @Controller('seed')
 export class SeedController {
-  constructor(private readonly seedService: SeedService) {}
+  constructor(private readonly practiceService: PracticeService) {}
 
   @Get()
-  findAll() {
-    return this.seedService.runSeed();
+  public runSeed() {
+    return this.practiceService.startPracticeSeed();
   }
 }

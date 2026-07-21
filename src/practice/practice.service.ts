@@ -11,7 +11,7 @@ export class PracticeService {
     PracticeHelpers.startPracticeSeed();
     return {
       message:
-        'Practice Seed Executed. Go back to Practice API route and watch the new info.',
+        'Practice Seed Executed. Go back to Practice `http://localhost:3000/practice` and watch the new info.',
     };
   }
 }
