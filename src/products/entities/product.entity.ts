@@ -2,12 +2,13 @@ import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
 export class Product {
+  //uuid
   @PrimaryGeneratedColumn('uuid')
   id: string;
-  @Column({ unique: true, type: 'text' })
-  titulo: string;
-  @Column({ type: 'numeric', default: 0 })
-  price: string;
-  @Column({ type: 'text', default: 'No tengo nada', nullable: false })
+  // description
+  @Column({ type: 'text', nullable: true })
   description: string;
+  // price
+  @Column({ type: 'numeric', default: 0, nullable: false })
+  price: string;
 }
