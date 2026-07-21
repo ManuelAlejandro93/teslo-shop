@@ -3,11 +3,11 @@ import { PracticeHelpers } from './helpers/PracticeHelpers';
 
 @Injectable()
 export class PracticeService {
-  findAll() {
+  public findAll() {
     return PracticeHelpers.getSeed();
   }
   //!Method for dependency Inyection
-  startPracticeSeed() {
+  public startPracticeSeed() {
     PracticeHelpers.startPracticeSeed();
     return {
       message:
