@@ -1,12 +1,20 @@
 import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 import { CreateProductDto, UpdateProductDto } from '@/products';
-
+import { Product } from '@/products';
 //!Before inyecting repository
 
 @Injectable()
 export class ProductsService {
-  create(createProductDto: CreateProductDto) {
-    return 'This action adds a new product';
+  public constructor(
+    @InjectRepository(Product)
+    private readonly productRepository: Repository<Product>,
+  ) {}
+
+  async create(createProductDto: CreateProductDto) {
+    const newProductWithEntityFormat =
+      this.productRepository.create(CreateProductDto);
   }
 
   findAll() {
