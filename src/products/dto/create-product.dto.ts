@@ -1,3 +1,4 @@
+import { Transform } from 'class-transformer';
 import {
   ArrayMinSize,
   IsArray,
@@ -16,6 +17,11 @@ export class CreateProductDto {
   @IsOptional()
   @IsString()
   @MinLength(10)
+  @Transform(({ value }) =>
+    value?.length >= 10
+      ? value
+      : 'A great new product in our shop, specially made for you <3',
+  )
   description?: string;
 
   //images
@@ -23,6 +29,13 @@ export class CreateProductDto {
   @IsArray()
   @IsString({ each: true })
   @ArrayMinSize(1)
+  @Transform(({ value }) =>
+    value?.length >= 1
+      ? value
+      : [
+          'https://res.cloudinary.com/dkr08foul/image/upload/v1778102512/WhatsApp_Image_2026-05-05_at_9.43.32_PM_2_eiwwan.jpg',
+        ],
+  )
   images?: string[];
 
   //stock
@@ -56,6 +69,9 @@ export class CreateProductDto {
   @IsArray()
   @IsString({ each: true })
   @ArrayMinSize(1)
+  @Transform(({ value }) =>
+    value?.length >= 1 ? value : ['xs', 's', 'm', 'l', 'xl'],
+  )
   tags!: string[];
 
   //title
