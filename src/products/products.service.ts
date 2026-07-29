@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { ConflictException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CreateProductDto, UpdateProductDto } from '@/products';
@@ -11,12 +11,18 @@ export class ProductsService {
     private readonly productRepository: Repository<Product>,
   ) {}
 
-  async create(createProductDto: CreateProductDto) {
+  async create(createProductDto: CreateProductDto): Promise<Product> {
     const fullUpDTO: CreateProductDto =
       ProductDTOHelpers.fillDTO(createProductDto);
-    const entityFormatProduct = this.productRepository.create(fullUpDTO);
-
-    await this.productRepository.save(entityFormatProduct);
+    const entityFormatProduct: Product =
+      this.productRepository.create(fullUpDTO);
+    try {
+      const DBResponse: Product =
+        await this.productRepository.save(entityFormatProduct);
+      return DBResponse;
+    } catch (error: any) {
+      throw new ConflictException(error.detail);
+    }
   }
 
   findAll() {
