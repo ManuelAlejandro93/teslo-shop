@@ -9,6 +9,7 @@ export class ProductsService {
   public constructor(
     @InjectRepository(Product)
     private readonly productRepository: Repository<Product>,
+    private logger: Logger,
   ) {}
 
   async create(createProductDto: CreateProductDto): Promise<Product> {
@@ -21,6 +22,8 @@ export class ProductsService {
         await this.productRepository.save(entityFormatProduct);
       return DBResponse;
     } catch (error: any) {
+      //!log
+      this.logger.error(error.detail, 'Product Service - Create Fn - Error');
       throw new ConflictException(error.detail);
     }
   }
