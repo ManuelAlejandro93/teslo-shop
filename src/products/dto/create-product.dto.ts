@@ -16,7 +16,7 @@ export class CreateProductDto {
   @IsOptional()
   @IsString()
   @MinLength(10)
-  description: string;
+  description?: string;
 
   //images
   @IsOptional()
@@ -28,44 +28,44 @@ export class CreateProductDto {
   //stock
   @IsInt()
   @IsPositive()
-  stock: number;
+  stock!: number;
 
   //price
   @IsNumber()
   @Min(0)
-  price: number;
+  price!: number;
 
   //sizes
   @IsArray()
   @IsString({ each: true })
   @ArrayMinSize(1)
-  sizes: string[];
+  sizes!: string[];
 
   //slug
   @IsString()
   @MinLength(10)
-  slug: string;
+  slug!: string;
 
   //type
   @IsString()
   @MinLength(3)
-  type: string;
+  type!: string;
 
   //tags
   @IsOptional()
   @IsArray()
   @IsString({ each: true })
   @ArrayMinSize(1)
-  tags: string[];
+  tags!: string[];
 
   //title
   @IsString()
   @MinLength(3)
-  title: string;
+  title!: string;
 
   //gender
   @IsString()
   @MinLength(3)
   @IsIn(['men', 'woman', 'boy', 'girl'])
-  gender: string;
+  gender!: string;
 }
