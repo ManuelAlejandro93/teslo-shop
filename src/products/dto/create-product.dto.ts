@@ -1,6 +1,8 @@
 import {
   ArrayMinSize,
   IsArray,
+  IsIn,
+  IsInt,
   IsNumber,
   IsOptional,
   IsPositive,
@@ -24,7 +26,7 @@ export class CreateProductDto {
   images?: string[];
 
   //stock
-  @IsNumber()
+  @IsInt()
   @IsPositive()
   stock: number;
 
@@ -64,5 +66,6 @@ export class CreateProductDto {
   //gender
   @IsString()
   @MinLength(3)
+  @IsIn(['men', 'woman', 'boy', 'girl'])
   gender: string;
 }
