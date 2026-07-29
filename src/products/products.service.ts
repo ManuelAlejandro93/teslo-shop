@@ -22,8 +22,10 @@ export class ProductsService {
         await this.productRepository.save(entityFormatProduct);
       return DBResponse;
     } catch (error: any) {
-      //!log
-      this.logger.error(error.detail, 'Product Service - Create Fn - Error');
+      this.logger.error(
+        error.detail,
+        'Product Service - create funtion - Error adding a new product',
+      );
       throw new ConflictException(error.detail);
     }
   }
