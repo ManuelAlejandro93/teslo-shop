@@ -30,8 +30,17 @@ export class ProductsService {
     }
   }
 
-  findAll() {
-    return `This action returns all products`;
+  async findAll(): Promise<Product[]> {
+    try {
+      const allProducts: Product[] = await this.productRepository.find();
+      return allProducts;
+    } catch (error: any) {
+      this.logger.error(
+        error.detail,
+        'Product Service - findAll - Error getting all products',
+      );
+      throw new ConflictException(error.detail);
+    }
   }
 
   findOne(id: number) {
