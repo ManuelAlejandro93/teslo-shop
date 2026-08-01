@@ -109,8 +109,26 @@ export class ProductsService {
     }
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} product`;
+  async remove(uuid: string) {
+    try {
+      this.productRepository.delete(uuid);
+      return {
+        status: 'success',
+        message: `Product with uuid ${uuid} deleted successfully.`,
+      };
+    } catch (error: any) {
+      this.logger.error(
+        error?.detail
+          ? error.detail
+          : 'Product Service - remove - Error deleting a single product',
+      );
+
+      throw new ConflictException(
+        error?.detail
+          ? error.detail
+          : 'Product Service - remove - Error deleting a single product',
+      );
+    }
   }
 }
 //

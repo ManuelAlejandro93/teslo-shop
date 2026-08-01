@@ -38,8 +38,8 @@ export class ProductsController {
     return this.productsService.update(uuid, updateProductDto);
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.productsService.remove(+id);
+  @Delete(':uuid')
+  remove(@Param('uuid', ParseUUIDPipe) uuid: string) {
+    return this.productsService.remove(uuid);
   }
 }
