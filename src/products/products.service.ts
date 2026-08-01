@@ -33,7 +33,6 @@ export class ProductsService {
   async findAll(): Promise<Product[]> {
     try {
       const allProducts: Product[] = await this.productRepository.find();
-      // throw new Error();
       return allProducts;
     } catch (error: any) {
       this.logger.error(
@@ -47,8 +46,23 @@ export class ProductsService {
     }
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} product`;
+  async findOne(uuid: string): Promise<Product[]> {
+    try {
+      const singleProductID: Product[] = await this.productRepository.findBy({
+        id: uuid,
+      });
+      return singleProductID;
+    } catch (error: any) {
+      this.logger.error(
+        error?.detail
+          ? error.detail
+          : 'Product Service - findOne - Error getting single product by ID',
+      );
+
+      throw new ConflictException(
+        error?.detail ? error.detail : 'Error getting single product by ID',
+      );
+    }
   }
 
   update(id: number, updateProductDto: UpdateProductDto) {

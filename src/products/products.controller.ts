@@ -6,6 +6,7 @@ import {
   Patch,
   Param,
   Delete,
+  ParseUUIDPipe,
 } from '@nestjs/common';
 import { ProductsService } from './products.service';
 import { CreateProductDto, UpdateProductDto } from '@/products';
@@ -24,9 +25,9 @@ export class ProductsController {
     return this.productsService.findAll();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.productsService.findOne(+id);
+  @Get(':uuid')
+  findOne(@Param('uuid', ParseUUIDPipe) uuid: string) {
+    return this.productsService.findOne(uuid);
   }
 
   @Patch(':id')
