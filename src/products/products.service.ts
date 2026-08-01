@@ -33,13 +33,17 @@ export class ProductsService {
   async findAll(): Promise<Product[]> {
     try {
       const allProducts: Product[] = await this.productRepository.find();
+      // throw new Error();
       return allProducts;
     } catch (error: any) {
       this.logger.error(
-        error.detail,
-        'Product Service - findAll - Error getting all products',
+        error?.detail
+          ? error.detail
+          : 'Product Service - findAll - Error getting all products',
       );
-      throw new ConflictException(error.detail);
+      throw new ConflictException(
+        error?.detail ? error.detail : 'Error getting all products',
+      );
     }
   }
 
