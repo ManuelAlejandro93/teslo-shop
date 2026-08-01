@@ -1,4 +1,9 @@
-import { ConflictException, Injectable, Logger } from '@nestjs/common';
+import {
+  ConflictException,
+  Injectable,
+  Logger,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CreateProductDto, UpdateProductDto } from '@/products';
@@ -46,12 +51,17 @@ export class ProductsService {
     }
   }
 
-  async findOne(uuid: string): Promise<Product[]> {
+  async findOne(uuid: string): Promise<Product> {
     try {
-      const singleProductID: Product[] = await this.productRepository.findBy({
-        id: uuid,
-      });
-      return singleProductID;
+      const singleProduct: Product | null =
+        await this.productRepository.findOneBy({
+          id: uuid,
+        });
+
+      if (!singleProduct) {
+        throw new NotFoundException(`Product with ${uuid} not found`);
+      }
+      return singleProduct;
     } catch (error: any) {
       this.logger.error(
         error?.detail
@@ -67,6 +77,23 @@ export class ProductsService {
 
   async update(uuid: string, updateProductDto: UpdateProductDto) {
     try {
+      const oldSingleProduct: Product | null =
+        await this.productRepository.findOneBy({
+          id: uuid,
+        });
+
+      if (!oldSingleProduct) {
+        throw new NotFoundException(`Product with ${uuid} not found`);
+      }
+
+      const updatedProduct = this.productRepository.merge(
+        oldSingleProduct,
+        updateProductDto,
+      );
+
+      const updatedUserInDB = await this.productRepository.save(updatedProduct);
+
+      return updatedUserInDB;
     } catch (error: any) {
       this.logger.error(
         error?.detail
