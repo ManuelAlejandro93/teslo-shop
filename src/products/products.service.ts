@@ -65,8 +65,21 @@ export class ProductsService {
     }
   }
 
-  update(id: number, updateProductDto: UpdateProductDto) {
-    return `This action updates a #${id} product`;
+  async update(uuid: string, updateProductDto: UpdateProductDto) {
+    try {
+    } catch (error: any) {
+      this.logger.error(
+        error?.detail
+          ? error.detail
+          : 'Product Service - update - Error updating a single product',
+      );
+
+      throw new ConflictException(
+        error?.detail
+          ? error.detail
+          : 'Product Service - update - Error updating a single product',
+      );
+    }
   }
 
   remove(id: number) {
