@@ -111,7 +111,8 @@ export class ProductsService {
 
   async remove(uuid: string) {
     try {
-      this.productRepository.delete(uuid);
+      await this.findOne(uuid);
+      await this.productRepository.delete(uuid);
       return {
         status: 'success',
         message: `Product with uuid ${uuid} deleted successfully.`,
