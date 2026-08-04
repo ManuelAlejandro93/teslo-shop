@@ -6,7 +6,11 @@ import {
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { CreateProductDto, UpdateProductDto } from '@/products';
+import {
+  AllProductPaginationDTO,
+  CreateProductDto,
+  UpdateProductDto,
+} from '@/products';
 import { Product, ProductDTOHelpers } from '@/products';
 
 @Injectable()
@@ -35,9 +39,19 @@ export class ProductsService {
     }
   }
 
-  async findAll(): Promise<Product[]> {
+  async findAll(
+    allProductPaginationDTO: AllProductPaginationDTO,
+  ): Promise<Product[]> {
+    const { limit = 5, offset = 0 } = allProductPaginationDTO;
     try {
-      const allProducts: Product[] = await this.productRepository.find();
+      const allProducts: Product[] = await this.productRepository.find({
+        skip: offset,
+        take: limit,
+      });
+
+      if (allProducts.length < 1) {
+        throw NotFoundException;
+      }
       return allProducts;
     } catch (error: any) {
       this.logger.error(
