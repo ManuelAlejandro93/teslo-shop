@@ -6,9 +6,15 @@ export class ProductDTOHelpers {
   ): CreateProductDto => {
     return {
       ...createProductDto,
-      description: ProductDTOHelpers.addDTODefaultDescription(),
-      images: ProductDTOHelpers.addDTODefaultImages(),
-      tags: ProductDTOHelpers.addDTODefaultTags(),
+      description: createProductDto?.description
+        ? createProductDto.description
+        : ProductDTOHelpers.addDTODefaultDescription(),
+      images: createProductDto?.images
+        ? createProductDto.images
+        : ProductDTOHelpers.addDTODefaultImages(),
+      tags: createProductDto?.tags
+        ? createProductDto.tags
+        : ProductDTOHelpers.addDTODefaultTags(),
     };
   };
 
